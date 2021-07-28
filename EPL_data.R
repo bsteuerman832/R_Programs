@@ -21,7 +21,10 @@ plot(EPL2021$GA, EPL2021$Pos,
      main = "EPL 20-21 team position vs goals conceded",
      xlab = "Goals conceded",
      ylab = "Team position",
-       col = "red", 
+       col = c("lightblue", "red", "darkred", "blue", "dodgerblue", "brown4", 
+               "black", "red", "gold", "blue", "lightslateblue", "gray48", 
+               "yellow1", "blue", "orangered", "deepskyblue", "lightblue",
+               "black", "navy", "red"), 
        pch = 19)
 
 summary(lm(EPL2021$Pos ~ EPL2021$GA)) #R-squared: 0.579
