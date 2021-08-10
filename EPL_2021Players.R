@@ -42,7 +42,7 @@ penalty_conv <- players %>% group_by(Club) %>%
              Penalties_Attempted = sum(Penalty_Attempted), 
              penalty_conv_perc = sum(Penalty_Goals) / sum(Penalty_Attempted)) %>% 
   arrange(desc(penalty_conv_perc))
-penalty_conv <-unique(penalty_conv) 
+penalty_conv <- unique(penalty_conv) 
 
 # Which ages had the most goals in the premier league last season?
 unique(players %>% group_by(Age) %>% filter(Goals > 0) %>%
@@ -70,3 +70,12 @@ goals_by_position <- unique(goals_by_position)
 goals_by_position <- goals_by_position %>% filter(!Position %in% c("FW,DF", "DF,FW"))
 ggplot(goals_by_position, aes(x=Position, y=goals)) + 
   geom_bar(stat="identity") + facet_wrap (~ Club)
+
+# Which clubs relied on goals from forwards the most:
+total_goals <- unique(players %>% group_by(Club) %>%
+   summarise(Club, total_goals = sum(Goals)))
+forward_goals <- unique(players %>% group_by(Club) %>%
+  filter(Goals > 0 & Position %in% "FW") %>% 
+  select(Club, forw_goals = sum(players$Goals)))
+forward_goals['total_goals'] = total_goals$total_goals
+forward_goals['perc_forwards'] = forward_goals$forw_goals / forward_goals$total_goals
